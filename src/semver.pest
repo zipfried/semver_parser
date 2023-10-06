@@ -1,0 +1,27 @@
+semver = {
+    core ~ EOI
+  | core ~ "-" ~ pre ~ EOI
+  | core ~ "+" ~ build ~ EOI
+  | core ~ "-" ~ pre ~ "+" ~ build ~ EOI
+}
+
+core  = { major ~ "." ~ minor ~ "." ~ patch }
+pre   = { pre_ident ~ ("." ~ pre_ident)* }
+build = { build_ident ~ ("." ~ build_ident)* }
+
+major = { num }
+minor = { num }
+patch = { num }
+
+pre_ident   = {
+    num
+  | ASCII_DIGIT+ ~ (ASCII_ALPHA+ | ("-" ~ ASCII_ALPHANUMERIC+)+)
+  | ASCII_ALPHA+ ~ ASCII_DIGIT* ~ ("-" ~ ASCII_ALPHANUMERIC+)*
+}
+build_ident = { alphanum ~ ("-" ~ alphanum)* }
+
+num      = _{
+    "0"
+  | ASCII_NONZERO_DIGIT ~ ASCII_DIGIT*
+}
+alphanum = _{ ASCII_ALPHANUMERIC+ }
